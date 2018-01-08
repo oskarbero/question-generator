@@ -1,0 +1,13 @@
+TODO: 
+* Get this bitch in github
+
+* DB (dynamo for kicks? Joins are pretty good tho... - NoSQL on EC2?)
+
+* Test Coverage
+
+* Move up in versions - get async/await and make sure we run in browser
+
+* ----- UI ------- 
+    - React Redux UI 
+    - Look up hosting on AWS (get a DNS domain for it cause gotta do it sometime)
+
