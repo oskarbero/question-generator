@@ -1,12 +1,18 @@
 const fs = require('fs');
-const log4js = require('log4js');
-const initLogger = require('./logger');
+// const log4js = require('log4js');
+// const initLogger = require('./logger');
 const omitBy = require('lodash').omitBy;
 const existsSync = require('fs').existsSync;
 const convertExcel = require('excel-as-json').processFile;
 const getResourcePath = require('./util').getResourcePath;
 
-const logger = initLogger();
+// const logger = initLogger();
+
+const tryGetBookFile = (fileName) => {
+    const path = 'D:\\dev\\question-generator\\resources\\Pharm drug chart.xlsx.json';
+    const bookData = fs.readFileSync(path);
+      return JSON.parse(bookData);
+}
 
 const processSheet = (result) => {
     let categoryRoot,
@@ -21,14 +27,14 @@ const processSheet = (result) => {
     }; 
 
     const isValidRow = (row) => {
-        logger.error(`Row category is 'n/a': ${row}`);
+        // logger.error(`Row category is 'n/a': ${row}`);
         return row && row.CATEGORY !== 'n/a' && !row['n/a'];
     }; 
  
     const isCategoryHeader = (row) => (isValidRow(row) && row.CATEGORY && row.CATEGORY.length);
 
     const hasSubcategory = (row) =>
-        (hasCatgeory(row) && (row.SUBCATEGORY || row['SUB-CATEGORY']));
+        (row.CATEGORY && (row.SUBCATEGORY || row['SUB-CATEGORY']));
 
     result.forEach((row) => {
         if(!isValidRow(row)) {
@@ -66,7 +72,7 @@ const processBook = (done, fileName) => {
             Object.assign(drugs,  processSheet(result));
         }
         else if (err) {
-            logger.error(`Error while parsing ${err}`);
+            // logger.error(`Error while parsing ${err}`);
         }
 
         if(--counter == 0) {
@@ -77,7 +83,7 @@ const processBook = (done, fileName) => {
         }
     };
 
-    for (idx = 0; idx < NUM_SHEETS; idx++) {
+    for (var idx = 0; idx < NUM_SHEETS; idx++) {
         const options = {
             sheet: idx,
             omitEmptyFields: true
@@ -87,7 +93,7 @@ const processBook = (done, fileName) => {
                 convertExcel(filePath, null, options, resultHandler);
             }
             else {
-                logger.debug('Path does not exist: ', filePath);
+                // logger.debug('Path does not exist: ', filePath);
                 counter--;
             }
         }
@@ -104,7 +110,8 @@ const processBook = (done, fileName) => {
 
 module.exports = {
     processBook,
-    processSheet
+    processSheet,
+    tryGetBookFile
 };
 
 //region

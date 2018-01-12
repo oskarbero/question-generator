@@ -79,4 +79,12 @@ const generateQuestion = () => {
     tryGetBookFile(bookCb, 'Pharm drug chart.xslx');
 }
 
+
+const questionScripts = {
+
+}
+
+
+
+
 generateQuestion();
