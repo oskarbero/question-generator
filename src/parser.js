@@ -103,78 +103,8 @@ const processBook = (done, fileName) => {
     };
 };
 
-// processBook((result) => {
-//     console.log('result ' + JSON.stringify(result, null, 2));
-//     console.log('finished');
-// });
-
 module.exports = {
     processBook,
     processSheet,
     tryGetBookFile
 };
-
-//region
-
-// const buildWorkbook = (num) => {
-//     const workbook = [];
-//     for(i = 0; i < num; i++) {
-//         const sheet = {};
-//         sheet["DRUG NAME"] = `drug #${i}`;
-//         workbook.push(sheet);
-//     };
-    
-//     return workbook;
-// }
-// const buildSheet = (category,  subcategory) => {
-//     const sheet = {
-//         "CATEGORY": "",
-//         "DRUG NAME": "",
-//         "SPECIFIC USES/FACTS": "",
-//         "ACTIONS": "",
-//         "ADR's": "" 
-//     };
-
-//     if(subcategory) {
-//         sheet["SUBCATEGORY"] = "";
-//     }
-    
-//     return sheet;
-// }
-// const test = () => {
-//     const workbook = [];
-//     for(i = 0; i < 5; i++) {
-//         const sheet = buildSheet()
-//         sheet["DRUG NAME"] = `drug #${i}`;
-//         workbook.push(sheet);
-//     };
-    
-//     workbook[0]["CATEGORY"] = "Category #1";
-//     workbook[0]["DRUG NAME"] = "some name";
-//     workbook[0]["ADR's"] = "some adrs";
-//     workbook[0]["ACTIONS"] = "actions!";
-
-//     const result = processSheet(workbook);
-
-//     console.log('result: ', JSON.stringify(result, null, 2));
-// }
-// const test2 =  () => {
-//     const workbook = buildWorkbook(5);        
-//     workbook[0]["CATEGORY"] = "#1 Category #1";
-//     workbook[0]["ADR's"] = "adrs 1";
-//     workbook[0]["ACTIONS"] = "actions 1";
-
-//     const workbook2 = buildWorkbook(5);        
-//     workbook2[0]["CATEGORY"] = "#2 Category #2";
-//     workbook2[0]["ADR's"] = "adrs 2";
-//     workbook2[0]["ACTIONS"] = "actions 2";
-
-//     const result = processSheet(workbook.concat(workbook2));
-
-//     const root1 = result['#1 Category #1'];
-//     const root2 = result['#2 Category #1'];
-// };
-// // test2();
-// // test();
-
-//endregion

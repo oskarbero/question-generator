@@ -18,7 +18,7 @@ function Question(question, answer, rawData, answerData) {
  * @param {number} n min num drugs
  */
 const getRandomCategory = (drugData, n) => {
-    const categoryNames = _.keys(drugData);
+    const categoryNames = Object.keys(drugData);
     const numDrugs = n || 5;
 
     if(!categoryNames) {
@@ -26,12 +26,9 @@ const getRandomCategory = (drugData, n) => {
         return;
     }
 
-    const categories = _.filter(_.values(drugData), cat => {
-        if(cat && cat.length >= numDrugs) {
-            return true;
-        }
-        return false;
-    });
+    const categories = drugData.filter(drug => {
+        return drug && drug.length >= numDrugs;
+    })
     return categories[_.random(0, categories.length)];
 }
 
@@ -87,4 +84,3 @@ const questionScripts = {
 
 
 
-generateQuestion();
