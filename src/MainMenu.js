@@ -5,6 +5,7 @@ import {
     Paper
 } from 'material-ui';
 
+
 const style = {
     display: 'inline-block',
 };
@@ -21,7 +22,7 @@ class MainMenu extends React.Component {
 
     render() {
         return (
-            <Paper style={{ display: 'inline-block' }}>
+            <Paper style={{ display: 'inline-block', zDepth: '5px' }}>
                 <Menu onItemClick={this.props.itemClickHandler} >
                     <MenuItem>
                         Drug Category Questions
@@ -29,7 +30,6 @@ class MainMenu extends React.Component {
                     <MenuItem>
                         Settings
                     </MenuItem>
-                   
                 </Menu>
             </Paper>
         );

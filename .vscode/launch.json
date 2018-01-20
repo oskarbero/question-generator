@@ -4,11 +4,22 @@
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "2.-.0",
     "configurations": [
+        // {
+        //     "type": "node",
+        //     "request": "launch",
+        //     "name": "Launch Program",
+        //     "program": "${file}"
+        // },
         {
-            "type": "node",
+            "name": "React Debug",
+            "type": "chrome",
             "request": "launch",
-            "name": "Launch Program",
-            "program": "${file}"
+            "url": "http://localhost:3000",
+            "webRoot": "${workspaceRoot}/src",
+            "userDataDir": "${workspaceRoot}/.vscode/chrome",
+            "sourceMapPathOverrides": {
+                "webpack:///src/*": "${webRoot}/*"
+            }
         }
     ]
 }

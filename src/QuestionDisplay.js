@@ -43,13 +43,13 @@ class QuestionDisplay extends Component {
 
     buildGenerateAndAnswerButtons = () => (
         <div>
+            <Divider style={{marginBottom: '1%'}} />
             <RaisedButton style={{float:'left'}} label="Answer" onClick={this.handleAnswerClick}/>
             <RaisedButton style={{float:'left'}} label="Generate" onClick={this.generateQuestion}/>
         </div>
     );
 
     generateQuestion = () => { 
-        // const categoryNames = ;
         const randomCategory = Object.keys(this.props.drugList)[_.random(0, this.props.numDrugCategories)];
         const categoryData = this.props.drugList[randomCategory];
         const drug = categoryData[_.random(0, categoryData)] || {};
@@ -72,7 +72,6 @@ class QuestionDisplay extends Component {
         });
     }
 
-
     showAnswer = () => {
         if(this.state.displayAnswer) {
             return ;
@@ -83,8 +82,8 @@ class QuestionDisplay extends Component {
         return (
             <div>
                 <h1> Drug Category Questions </h1>
-                <Divider style={{marginBottom: '1%'}} />
                 <div hidden={!this.state.displayQuestion}>
+                    <Divider style={{marginBottom: '1%'}} />
                     <h2>Question:  {this.state.prompt.question }</h2>
                     <h2>Answer:    {this.state.displayAnswer ? this.state.prompt.answer : null} </h2>
                 </div>

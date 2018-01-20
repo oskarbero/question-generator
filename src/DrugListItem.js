@@ -42,7 +42,7 @@ class DrugListItem extends ListItem {
             <span key={`${drug["DRUG NAME"]}`}>
                 <ListItem
                     nestedLevel={1}
-                    // key={`${drug["DRUG NAME"]}_${idx}`}
+                    key={`${drug["DRUG NAME"]}_${idx}`}
                     primaryText={drug["DRUG NAME"]}
                     nestedItems={this.printDrugProps(drug)}
                 >

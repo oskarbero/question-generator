@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {
   AppBar,
   MuiThemeProvider,
+  Divider,
 } from 'material-ui'
 import { workbook } from './drugChart';
 
@@ -12,6 +13,7 @@ import MainMenu from './MainMenu';
 import darkBaseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import QuestionDisplay from './QuestionDisplay';
+import SettingsMenu from './SettingsMenu';
 
 const styles = {
   MainContent: { 
@@ -34,7 +36,8 @@ class App extends Component {
     super(props, context);
     this.state = { 
       itemClicked: 'Drug Category Questions'
-     };
+      
+    };
     this.handleMenuItemClick = this.handleMenuItemClick.bind(this);
   };
 
@@ -42,12 +45,24 @@ class App extends Component {
     this.setState(Object.assign({}, this.state, {itemClicked: menuItem.props.children}));
   }
 
+  buildSettingsMenu = () => {
+    return (
+      <div>
+        <h1>
+          Settings
+              <Divider style={{ marginTop: '1%' }} />
+        </h1>
+        <SettingsMenu activeCategories={fetch('/activeCategories')} drugList={workbook} />
+      </div>
+    );
+  }
+
   getRequestedContent = () => {
     switch(this.state.itemClicked) {
       case 'Drug Category Questions':
         return (<QuestionDisplay drugList={workbook} numDrugCategories={Object.keys(workbook).length}/>);
       case 'Settings':
-        return (<div><h1> Settings </h1></div>);
+        return (<div><h1>Settings<Divider style={{marginTop: '1%'}}/></h1> <SettingsMenu onSettingsToggle={console.log('toggle')} drugList={workbook}/></div>);
     }
   }
 
