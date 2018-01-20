@@ -24,7 +24,6 @@ const styles = {
   MainMenu: { 
     width: '15%', 
     float: 'left', 
-    overflow: 'auto' 
   },
   MainAppBar: {
     'heigth': '10%'
@@ -36,7 +35,6 @@ class App extends Component {
     super(props, context);
     this.state = { 
       itemClicked: 'Drug Category Questions'
-      
     };
     this.handleMenuItemClick = this.handleMenuItemClick.bind(this);
   };
@@ -50,7 +48,7 @@ class App extends Component {
       <div>
         <h1>
           Settings
-              <Divider style={{ marginTop: '1%' }} />
+          <Divider style={{ marginTop: '1%' }} />
         </h1>
         <SettingsMenu activeCategories={fetch('/activeCategories')} drugList={workbook} />
       </div>
@@ -61,8 +59,8 @@ class App extends Component {
     switch(this.state.itemClicked) {
       case 'Drug Category Questions':
         return (<QuestionDisplay drugList={workbook} numDrugCategories={Object.keys(workbook).length}/>);
-      case 'Settings':
-        return (<div><h1>Settings<Divider style={{marginTop: '1%'}}/></h1> <SettingsMenu onSettingsToggle={console.log('toggle')} drugList={workbook}/></div>);
+      case 'Category Settings':
+        return (<div><h1>Settings<Divider style={{marginTop: '1%'}}/></h1> <SettingsMenu onSettingsToggle={console.log('toggle')}/></div>);
     }
   }
 

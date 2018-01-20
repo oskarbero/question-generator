@@ -28,7 +28,7 @@ class MainMenu extends React.Component {
                         Drug Category Questions
                     </MenuItem>
                     <MenuItem>
-                        Settings
+                        Category Settings
                     </MenuItem>
                 </Menu>
             </Paper>

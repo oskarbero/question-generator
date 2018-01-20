@@ -6,9 +6,8 @@ import {
     Divider,
     Toggle
 } from 'material-ui';
+import { apiGet, apiPost } from './Api';
 
-import * as _ from 'lodash';
-const fs = require('fs')
 
 function checkStatus(response) {
     if (response.status >= 200 && response.status < 300) {
@@ -32,17 +31,16 @@ class SettingsMenu extends Component {
         this.setCategoryActive.bind(this);
         this.updateActiveCategories.bind(this);
 
-        fetch('/getCategories', {
-            method: 'GET',
-            headers: new Headers({
-                'Accept': 'application/json'
-            })
-        })
-            .then(checkStatus)
-            .then(parseJSON)
+        apiGet('/getCategories')
             .then(this.updateActiveCategories.bind(this));
+        
+        apiGet('/getDrugList')
+            .then((resp) => {
+                this.setState(Object.assign({}, this.state, {drugList: resp}));
+            })
 
         this.state = {
+            drugList: {},
             toggle: {}
         }
     }
@@ -52,22 +50,12 @@ class SettingsMenu extends Component {
     }
 
     setCategoryActive = (category, event, isInputChecked) => {
-
         this.toggled = isInputChecked;
         const body = {};
         body[category] = isInputChecked;
-        const settings = {
-            method: 'POST',
-            body: JSON.stringify(body),
-            headers: new Headers({
-                'Content-Type': 'application/json'
-            })
-        }
-        fetch('/setCategories', settings)
-        .then(checkStatus)
-        .then(parseJSON)
-        .then(this.updateActiveCategories.bind(this)); 
 
+        const resp = apiPost('/setCategories', body)
+            .then(this.updateActiveCategories.bind(this));
     }
 
 
@@ -75,13 +63,13 @@ class SettingsMenu extends Component {
         return (
             <Toggle
                 toggled={this.state.toggle[category]}
-                onToggle={this.setCategoryActive.bind(this,category)}
+                onToggle={this.setCategoryActive.bind(this, category)}
             />
         )
     }
 
     buildDrugCategoryList = () => {
-        return Object.keys(this.props.drugList).map((category, idx) => {
+        return Object.keys(this.state.drugList).map((category, idx) => {
             return (
                 <div key={category}>
                     <ListItem

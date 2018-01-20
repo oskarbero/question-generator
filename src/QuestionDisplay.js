@@ -5,6 +5,7 @@ import Paper from 'material-ui/Paper';
 import MenuItem from 'material-ui/MenuItem';
 import RaisedButton from 'material-ui/RaisedButton';
 import Divider from 'material-ui/Divider';
+import {apiGet, apiPost} from './Api';
 
 import * as _ from 'lodash';
 
@@ -17,6 +18,10 @@ function Question(question, answer, rawData, answerData) {
     this.answerData = answerData || {};
 }
 
+const filterDrugs = () => {
+
+}
+
 class QuestionDisplay extends Component {
     constructor(props, context) {
         super(props, context);
@@ -27,6 +32,28 @@ class QuestionDisplay extends Component {
             displayPrompt: true,
             prompt: {}
         };
+
+        const setInitialState = (active) => {
+            this.setState(Object.assign({}, this.state, {
+                drugList: active,
+                numDrugCategories: Object.keys(active).length
+            }))
+        }
+
+
+        apiGet('/getActiveDrugList')
+            .then((resp) => {
+                console.log(resp);
+                const active = {}
+                for(const cat in resp.active) {
+                    if(resp.active[cat]){
+                        active[cat] = resp.drugList[cat];
+                    }
+                }
+                console.log(Object.keys(resp).length);
+                setInitialState(active);
+            });
+        
     }
 
     handlePromptInput = (event, index, value) => {
@@ -46,12 +73,17 @@ class QuestionDisplay extends Component {
             <Divider style={{marginBottom: '1%'}} />
             <RaisedButton style={{float:'left'}} label="Answer" onClick={this.handleAnswerClick}/>
             <RaisedButton style={{float:'left'}} label="Generate" onClick={this.generateQuestion}/>
-        </div>
+        </div> 
     );
 
     generateQuestion = () => { 
-        const randomCategory = Object.keys(this.props.drugList)[_.random(0, this.props.numDrugCategories)];
-        const categoryData = this.props.drugList[randomCategory];
+        console.log(this.state.drugList);
+        if(this.state.numDrugCategories <= 0) {
+            return;
+        }
+        const randoCatIdx = _.random(0, this.state.numDrugCategories - 1);
+        const randomCategory = Object.keys(this.state.drugList)[randoCatIdx];
+        const categoryData = this.state.drugList[randomCategory];
         const drug = categoryData[_.random(0, categoryData)] || {};
         const drugName = drug["DRUG NAME"];
         const category = drug["CATEGORY"];
@@ -60,7 +92,7 @@ class QuestionDisplay extends Component {
             return null;
         } 
     
-        this.setState({
+        this.setState(Object.assign({}, this.state, {
             displayAnswer: false,
             displayQuestion: true,
             prompt: new Question(
@@ -69,7 +101,7 @@ class QuestionDisplay extends Component {
                 categoryData,
                 drug
             )
-        });
+        }));
     }
 
     showAnswer = () => {
