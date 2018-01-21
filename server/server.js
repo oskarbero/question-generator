@@ -45,22 +45,6 @@ app.get('/getDrugList', function(req, res) {
 app.get('/getActiveDrugList', function(req, res) {
     const drugList = getDrugList();
     const active = getSettings();
-    // console.log(settings);
-
-
-
-    // Object.values(settings).forEach(val => {
-    // })
-    // Object.keys(drugList).forEach(key =>
-    //     {
-    //         if(settings[key]){
-    //             active.push(drugList[key]);
-    //         }
-    //     }
-    // )
-    // console.log(active.length);
-
-
     res.send({drugList, active});
 });
 

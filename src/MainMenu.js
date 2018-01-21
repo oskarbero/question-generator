@@ -5,7 +5,6 @@ import {
     Paper
 } from 'material-ui';
 
-
 const style = {
     display: 'inline-block',
 };

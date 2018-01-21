@@ -7,7 +7,6 @@ import {
 import { workbook } from './drugChart';
 
 import Paper from 'material-ui/Paper';
-import DrugList from './DrugList';
 import MainMenu from './MainMenu';
 
 import darkBaseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
@@ -16,14 +15,14 @@ import QuestionDisplay from './QuestionDisplay';
 import SettingsMenu from './SettingsMenu';
 
 const styles = {
-  MainContent: { 
-    width: '75%', 
-    float: 'left', 
+  MainContent: {
+    width: '75%',
+    float: 'left',
     height: '100%'
   },
-  MainMenu: { 
-    width: '15%', 
-    float: 'left', 
+  MainMenu: {
+    width: '15%',
+    float: 'left',
   },
   MainAppBar: {
     'heigth': '10%'
@@ -33,34 +32,31 @@ const styles = {
 class App extends Component {
   constructor(props, context) {
     super(props, context);
-    this.state = { 
+    this.state = {
       itemClicked: 'Drug Category Questions'
     };
     this.handleMenuItemClick = this.handleMenuItemClick.bind(this);
   };
 
   handleMenuItemClick = (event, menuItem, index) => {
-    this.setState(Object.assign({}, this.state, {itemClicked: menuItem.props.children}));
+    this.setState(Object.assign({}, this.state, { itemClicked: menuItem.props.children }));
   }
 
-  buildSettingsMenu = () => {
-    return (
-      <div>
-        <h1>
-          Settings
-          <Divider style={{ marginTop: '1%' }} />
-        </h1>
-        <SettingsMenu activeCategories={fetch('/activeCategories')} drugList={workbook} />
-      </div>
-    );
-  }
+  buildSettingsMenu = () => (
+    <div>
+      <h1>Settings
+        <Divider style={{ marginTop: '1%' }} />
+      </h1>
+      <SettingsMenu  />
+    </div>
+  )
 
   getRequestedContent = () => {
-    switch(this.state.itemClicked) {
+    switch (this.state.itemClicked) {
       case 'Drug Category Questions':
-        return (<QuestionDisplay drugList={workbook} numDrugCategories={Object.keys(workbook).length}/>);
+        return <QuestionDisplay />;
       case 'Category Settings':
-        return (<div><h1>Settings<Divider style={{marginTop: '1%'}}/></h1> <SettingsMenu onSettingsToggle={console.log('toggle')}/></div>);
+        return this.buildSettingsMenu();
     }
   }
 
@@ -75,12 +71,12 @@ class App extends Component {
         </div>
 
         <div className="MainMenu" style={styles.MainMenu}>
-          <MainMenu itemClickHandler={this.handleMenuItemClick}/>
+          <MainMenu itemClickHandler={this.handleMenuItemClick} />
         </div>
 
         {/* TODO: Element Not relative to the rest - does not adjust size properly */}
         <div className="MainContent" style={styles.MainContent}>
-            {this.getRequestedContent()}
+          {this.getRequestedContent()}
         </div>
       </div>
     );
