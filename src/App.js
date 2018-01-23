@@ -36,6 +36,7 @@ class App extends Component {
       itemClicked: 'Drug Category Questions'
     };
     this.handleMenuItemClick = this.handleMenuItemClick.bind(this);
+    this.getRequestedContent = this.getRequestedContent.bind(this);
   };
 
   handleMenuItemClick = (event, menuItem, index) => {
@@ -60,32 +61,26 @@ class App extends Component {
     }
   }
 
-  MainMenuOverlay = (props) => {
-    return (
-      <div>
-        <div className="MainAppBar">
-          <AppBar
-            title="Taia's House Of Drugs"
-            iconClassNameRight="muidocs-icon-navigation-expand-more"
-          />
-        </div>
-
-        <div className="MainMenu" style={styles.MainMenu}>
-          <MainMenu itemClickHandler={this.handleMenuItemClick} />
-        </div>
-
-        {/* TODO: Element Not relative to the rest - does not adjust size properly */}
-        <div className="MainContent" style={styles.MainContent}>
-          {this.getRequestedContent()}
-        </div>
-      </div>
-    );
-  }
-
   render() {
     return (
       <MuiThemeProvider muiTheme={getMuiTheme(darkBaseTheme)}>
-        {this.MainMenuOverlay()}
+        <div>
+          <div className="MainAppBar">
+            <AppBar
+              title="Taia's House Of Drugs"
+              iconClassNameRight="muidocs-icon-navigation-expand-more"
+            />
+          </div>
+
+          <div className="MainMenu" style={styles.MainMenu}>
+            <MainMenu itemClickHandler={this.handleMenuItemClick} />
+          </div>
+
+          {/* TODO: Element Not relative to the rest - does not adjust size properly */}
+          <div className="MainContent" style={styles.MainContent}>
+            {this.getRequestedContent()}
+          </div>
+        </div>
       </MuiThemeProvider>
     );
   }

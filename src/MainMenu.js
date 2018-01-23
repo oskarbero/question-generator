@@ -7,32 +7,22 @@ import {
 
 const style = {
     display: 'inline-block',
+    zDepth: '5px' 
 };
 
-class MainMenu extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            open: true
-        };
-    }
-
-    handleToggle = () => this.setState({ open: !this.state.open });
-
-    render() {
-        return (
-            <Paper style={{ display: 'inline-block', zDepth: '5px' }}>
-                <Menu onItemClick={this.props.itemClickHandler} >
-                    <MenuItem>
-                        Drug Category Questions
-                    </MenuItem>
-                    <MenuItem>
-                        Category Settings
-                    </MenuItem>
-                </Menu>
-            </Paper>
-        );
-    }
+const MainMenu = ({itemClickHandler}) => {
+    return (
+        <Paper style={style}>
+            <Menu onItemClick={itemClickHandler} >
+                <MenuItem>
+                    Drug Category Questions
+                </MenuItem>
+                <MenuItem>
+                    Category Settings
+                </MenuItem>
+            </Menu>
+        </Paper>
+    );
 }
 
 export default MainMenu;

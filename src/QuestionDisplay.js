@@ -18,10 +18,6 @@ function Question(question, answer, rawData, answerData) {
     this.answerData = answerData || {};
 }
 
-const filterDrugs = () => {
-
-}
-
 class QuestionDisplay extends Component {
     constructor(props, context) {
         super(props, context);
