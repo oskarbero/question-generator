@@ -4,7 +4,6 @@ import {
   MuiThemeProvider,
   Divider,
 } from 'material-ui'
-import { workbook } from './drugChart';
 
 import Paper from 'material-ui/Paper';
 import MainMenu from './MainMenu';

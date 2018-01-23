@@ -9,8 +9,6 @@ import {apiGet, apiPost} from './Api';
 
 import * as _ from 'lodash';
 
-import { workbook } from './drugChart';
-
 function Question(question, answer, rawData, answerData) {
     this.question = question || "";
     this.answer = answer || "";

@@ -6,7 +6,7 @@ import {
     AppBar,
     MuiThemeProvider
 } from 'material-ui';
-import { workbook } from './drugChart';
+
 
 
 
