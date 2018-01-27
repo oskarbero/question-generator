@@ -44,9 +44,9 @@ class App extends Component {
 
   buildSettingsMenu = () => (
     <div>
-      <h1>Settings
+      {/* <h1>Settings
         <Divider style={{ marginTop: '1%' }} />
-      </h1>
+      </h1> */}
       <SettingsMenu  />
     </div>
   )

@@ -14,6 +14,7 @@ class SettingsMenu extends Component {
 
         this.setCategoryActive = this.setCategoryActive.bind(this);
         this.updateActiveCategories = this.updateActiveCategories.bind(this);
+        this.toggleAllCategories = this.toggleAllCategories.bind(this);
 
         apiGet('/getCategories')
             .then(this.updateActiveCategories.bind(this));
@@ -38,6 +39,16 @@ class SettingsMenu extends Component {
         const body = {};
         body[category] = isInputChecked;
 
+        const resp = apiPost('/setCategories', body)
+            .then(this.updateActiveCategories.bind(this));
+    }
+
+    toggleAllCategories = (event, isInputChecked) => {
+        this.toggled = isInputChecked;
+        const body = {
+            TOGGLE_ALL: isInputChecked
+        };
+        Object.keys(this.state.drugList).forEach(val => body[val] = isInputChecked);
         const resp = apiPost('/setCategories', body)
             .then(this.updateActiveCategories.bind(this));
     }
@@ -69,6 +80,18 @@ class SettingsMenu extends Component {
     render() {
         return (
             <div>
+                <h1>Settings
+
+                <Toggle
+                    label={' '}
+                    toggled={this.state.toggle['TOGGLE_ALL']}
+                    onToggle={this.toggleAllCategories.bind(this)}
+
+                // toggled={this.state.toggle[category]}
+                // onToggle={this.setCategoryActive.bind(this, category)}
+                />
+        <Divider style={{ marginTop: '1%' }} />
+                </h1>
                 <List>
                     <Subheader>Categories included</Subheader>
                     {this.buildDrugCategoryList()}

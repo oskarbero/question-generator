@@ -10,7 +10,6 @@ import { Provider } from 'react-redux';
 const store = createStore(mainMenuReducer);
 const rootElement = document.getElementById('root');
 
-
 const render = () => ReactDOM.render(
     <Provider store={store}>
         <App />
