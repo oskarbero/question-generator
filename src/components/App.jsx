@@ -2,10 +2,8 @@ import React, { Component } from 'react';
 import {
   AppBar,
   MuiThemeProvider,
-  Divider,
 } from 'material-ui'
 
-import Paper from 'material-ui/Paper';
 import MainMenu from './MainMenu';
 
 import darkBaseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
@@ -57,6 +55,8 @@ class App extends Component {
         return <QuestionDisplay />;
       case 'Category Settings':
         return this.buildSettingsMenu();
+      default:
+        return undefined;
     }
   }
 

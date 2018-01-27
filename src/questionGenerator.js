@@ -74,8 +74,4 @@ export const ADRQuestion = drugList => {
     //      `Patient wants to go on ${category} to ${MOA} but is worried about ${SIDE EFFECT}.
     //       Which ${drug || subcategory} would you perscribe.
     //
-
-
-    const a = categoryData.map(c => c.ADRS);
-    
 }

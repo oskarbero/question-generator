@@ -39,7 +39,7 @@ class SettingsMenu extends Component {
         const body = {};
         body[category] = isInputChecked;
 
-        const resp = apiPost('/setCategories', body)
+        apiPost('/setCategories', body)
             .then(this.updateActiveCategories.bind(this));
     }
 
@@ -49,7 +49,8 @@ class SettingsMenu extends Component {
             TOGGLE_ALL: isInputChecked
         };
         Object.keys(this.state.drugList).forEach(val => body[val] = isInputChecked);
-        const resp = apiPost('/setCategories', body)
+
+        apiPost('/setCategories', body)
             .then(this.updateActiveCategories.bind(this));
     }
 

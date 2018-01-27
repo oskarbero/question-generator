@@ -1,22 +1,12 @@
 
 import React, { Component } from 'react';
-import SelectField from 'material-ui/SelectField';
-import Paper from 'material-ui/Paper';
 import MenuItem from 'material-ui/MenuItem';
 import RaisedButton from 'material-ui/RaisedButton';
 import Divider from 'material-ui/Divider';
 import DropDownMenu from 'material-ui/DropDownMenu';
-import { apiGet, apiPost } from './Api';
+import { apiGet } from './Api';
 import {randomCategoryQuestion, ADRQuestion} from '../questionGenerator';
 
-import * as _ from 'lodash';
-
-function Question(question, answer, rawData, answerData) {
-    this.question = question || "";
-    this.answer = answer || "";
-    this.fullData = rawData || {};
-    this.answerData = answerData || {};
-}
 
 class QuestionDisplay extends Component {
     constructor(props, context) {
