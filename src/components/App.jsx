@@ -10,21 +10,23 @@ import darkBaseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import QuestionDisplay from './QuestionDisplay';
 import SettingsMenu from './SettingsMenu';
+import styles from './MainStyles';
 
+/*
 const styles = {
   MainContent: {
     width: '75%',
-    float: 'left',
     height: '100%'
   },
   MainMenu: {
     width: '15%',
-    float: 'left',
+    float: 'left'
   },
   MainAppBar: {
-    'heigth': '10%'
+    width: '76.5%'
   }
 };
+*/
 
 class App extends Component {
   constructor(props, context) {
@@ -41,7 +43,7 @@ class App extends Component {
   }
 
   buildSettingsMenu = () => (
-    <div>
+    <div className="SettingsMenu" style={styles.SettingsMenu}>
       {/* <h1>Settings
         <Divider style={{ marginTop: '1%' }} />
       </h1> */}
@@ -64,7 +66,7 @@ class App extends Component {
     return (
       <MuiThemeProvider muiTheme={getMuiTheme(darkBaseTheme)}>
         <div>
-          <div className="MainAppBar">
+          <div className="MainAppBar" style={styles.MainAppBar}>
             <AppBar
               title="Taia's House Of Drugs"
               iconClassNameRight="muidocs-icon-navigation-expand-more"
