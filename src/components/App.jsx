@@ -3,83 +3,64 @@ import {
   AppBar,
   MuiThemeProvider,
 } from 'material-ui'
-
 import MainMenu from './MainMenu';
 
-import darkBaseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
-import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import QuestionDisplay from './QuestionDisplay';
 import SettingsMenu from './SettingsMenu';
-import styles from './MainStyles';
 
-/*
-const styles = {
-  MainContent: {
-    width: '75%',
-    height: '100%'
-  },
-  MainMenu: {
-    width: '15%',
-    float: 'left'
-  },
-  MainAppBar: {
-    width: '76.5%'
-  }
-};
-*/
+import './App.css';
 
 class App extends Component {
   constructor(props, context) {
     super(props, context);
     this.state = {
-      itemClicked: 'Drug Category Questions'
+      itemClicked: 'Question Generator',
+      lastClicked: ''
     };
     this.handleMenuItemClick = this.handleMenuItemClick.bind(this);
     this.getRequestedContent = this.getRequestedContent.bind(this);
   };
 
-  handleMenuItemClick = (event, menuItem, index) => {
-    this.setState(Object.assign({}, this.state, { itemClicked: menuItem.props.children }));
+  handleMenuItemClick = (itemClicked) => {
+    // To intoxicated to read this but it works .. it's stupid but it works.
+    let lastClicked = this.state.itemClicked !== itemClicked ? itemClicked : this.state.itemClicked;
+    this.setState(Object.assign({}, this.state, { itemClicked }, {lastClicked}));
   }
-
-  buildSettingsMenu = () => (
-    <div className="SettingsMenu" style={styles.SettingsMenu}>
-      {/* <h1>Settings
-        <Divider style={{ marginTop: '1%' }} />
-      </h1> */}
-      <SettingsMenu  />
-    </div>
-  )
 
   getRequestedContent = () => {
     switch (this.state.itemClicked) {
-      case 'Drug Category Questions':
-        return <QuestionDisplay />;
-      case 'Category Settings':
-        return this.buildSettingsMenu();
+      case 'ADRs':
+      case 'Drug Category':
+        return <QuestionDisplay questionType={this.state.itemClicked} lastClicked={this.state.lastClicked}/>;
+      case 'Settings':
+        return <SettingsMenu />;
+      case 'Question Generator':
       default:
-        return undefined;
+        // Dummy content
+        return <h1>Hello, welcome to my question generator fren!</h1>;
     }
   }
 
   render() {
     return (
-      <MuiThemeProvider muiTheme={getMuiTheme(darkBaseTheme)}>
+      <MuiThemeProvider>
         <div>
-          <div className="MainAppBar" style={styles.MainAppBar}>
-            <AppBar
-              title="Taia's House Of Drugs"
-              iconClassNameRight="muidocs-icon-navigation-expand-more"
-            />
+          <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+          <div className="row">
+            <div className="MainAppBar col-12">
+              <AppBar
+                title="Taia's House Of Drugs"
+                iconClassNameRight="muidocs-icon-navigation-expand-more"
+              />
+            </div>
           </div>
-
-          <div className="MainMenu" style={styles.MainMenu}>
-            <MainMenu itemClickHandler={this.handleMenuItemClick} />
-          </div>
-
-          {/* TODO: Element Not relative to the rest - does not adjust size properly */}
-          <div className="MainContent" style={styles.MainContent}>
-            {this.getRequestedContent()}
+          <div className="row">
+            <div className="col-2">
+              <MainMenu itemClickHandler={this.handleMenuItemClick} />
+            </div>
+            <div className="col-10">
+              {this.getRequestedContent()}
+            </div>
           </div>
         </div>
       </MuiThemeProvider>

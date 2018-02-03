@@ -1,33 +1,33 @@
 
 import React, { Component } from 'react';
-import MenuItem from 'material-ui/MenuItem';
 import RaisedButton from 'material-ui/RaisedButton';
 import Divider from 'material-ui/Divider';
-import DropDownMenu from 'material-ui/DropDownMenu';
 import { apiGet } from './Api';
-import {randomCategoryQuestion, ADRQuestion} from '../questionGenerator';
+import { categoryQuestion, adrQuestion } from '../questionGenerator';
+
+import './App.css';
 
 
 class QuestionDisplay extends Component {
     constructor(props, context) {
         super(props, context);
         this.state = {
-            value: '',
             displayAnswer: false,
             displayQuestion: false,
-            questionType: 'category',
-            displayPrompt: true,
+            questionType: this.props.questionType,
+            displayPrompt: false,
             prompt: {}
         };
 
         const setInitialState = (active) => {
             this.setState(Object.assign({}, this.state, {
                 drugList: active,
-                numDrugCategories: Object.keys(active).length
+                numDrugCategories: Object.keys(active).length,
+                displayPrompt: false,
             }))
         }
-        this.handleQuestionTypeChange = this.handleQuestionTypeChange.bind(this);
-        this.generateQuestion = this.generateQuestion.bind(this);
+        this.generateQuestionContent = this.generateQuestionContent.bind(this);
+        this.renderQuestion = this.renderQuestion.bind(this);
 
         apiGet('/getActiveDrugList')
             .then((resp) => {
@@ -39,112 +39,63 @@ class QuestionDisplay extends Component {
                 }
                 setInitialState(active);
             });
-
     }
 
-    handlePromptInput = (event, index, value) => {
-        this.setState(Object.assign({}, this.state, {
-            value,
-        }));
-    };
-
-    handleAnswerClick = (event, index) => {
+    displayAnswer = () => {
         this.setState(Object.assign({}, this.state, {
             displayAnswer: true
         }));
     }
 
-    handleQuestionTypeChange = (event, index, value) => {
-        this.setState(Object.assign({}, this.state, {
-            questionType: value
-        }));
-    }
-
-    buildGenerateAndAnswerButtons = () => (
-        <div>
-            <Divider style={{ marginBottom: '1%' }} />
-            <RaisedButton style={{ float: 'left' }} label="Answer" onClick={this.handleAnswerClick} />
-            <RaisedButton style={{ float: 'left' }} label="Generate" onClick={this.generateQuestion} />
-            <DropDownMenu value={this.state.questionType} onChange={this.handleQuestionTypeChange} openImmediately={true}>
-                <MenuItem value={'category'} primaryText="category" />
-                <MenuItem value={'ADR'} primaryText="ADR" />
-            </DropDownMenu>
-        </div>
-    );
-
-    generateQuestion = () => {
+    generateQuestionContent = () => {
         if (this.state.numDrugCategories <= 0) {
             return;
         }
-        switch(this.state.questionType) {
-            case 'ADR':
-                return ADRQuestion(this.state.drugList); 
-            default: 
-                return this.generateCategoryQuestion();
-        }
-    }
-
-    generateCategoryQuestion = () => {
-        const question = randomCategoryQuestion(this.state.drugList);
-        this.setState(Object.assign({}, this.state, question));
-    }
-
-    showAnswer = () => {
-        if (this.state.displayAnswer) {
-            return;
-        }
-    }
-
-    renderQuestion = () => {
-        switch (this.state.questionType) {
-            case 'ADR':
-                return (
-                    <div>
-                        <h1>Hello ADR question</h1>
-                        <div hidden={!this.state.displayQuestion}>
-                            <Divider style={{ marginBottom: '1%' }} />
-                            <h2>Question:  {this.state.prompt.question}</h2>
-                            <h2>Answer:    {this.state.displayAnswer ? this.state.prompt.answer : null} </h2>
-                        </div>
-                    </div>
-                );
+        let question;
+        switch (this.props.questionType) {
+            case 'ADRs':
+                question = adrQuestion(this.state.drugList);
+                break;
             default:
-                return (
-                    <div>
-                        <h1> Drug Category Questions </h1>
-                        <div hidden={!this.state.displayQuestion}>
-                            <Divider style={{ marginBottom: '1%' }} />
-                            <h2>Question:  {this.state.prompt.question}</h2>
-                            <h2>Answer:    {this.state.displayAnswer ? this.state.prompt.answer : null} </h2>
-                        </div>
-                    </div>
-                );
+                question = categoryQuestion(this.state.drugList);
+                break;
         }
+        this.setState(Object.assign({}, this.state, { ...question }));
     }
 
-    renderDrugQuestionContent = () => {
-        return (
-            <div>
-                {this.renderQuestion()}
-                {this.buildGenerateAndAnswerButtons()}
-            </div>
-        );
-    }
-
-    displayQuestion = () => {
-        if (this.state.displayPrompt) {
-            return this.renderDrugQuestionContent();
-        }
-        else {
-            return this.buildGenerateAndAnswerButtons();
+    renderQuestionContent = () => {
+        // Checks if we are displaying a new category - if so we do not display question until generate is clicked
+        if (this.state.prompt && this.state.prompt.type === this.props.lastClicked) {
+            return (
+                <div>
+                    <Divider style={{ marginBottom: '1%' }} />
+                    <h2>Question:  {this.state.prompt.question}</h2>
+                    <h2>Answer:    {this.state.displayAnswer ? this.state.prompt.answer : null} </h2>
+                </div>
+            );
         }
     };
 
+    renderQuestion = () => (
+        <div>
+            <div>
+                <h1>{this.props.questionType}</h1>
+            </div>
+            <div>
+                {this.renderQuestionContent()}
+                <div className="row">
+                    <Divider style={{ marginBottom: '1%' }} />
+                    <RaisedButton style={{ float: 'left' }} label="Answer" onClick={this.displayAnswer} />
+                    <RaisedButton style={{ float: 'left' }} label="Generate" onClick={this.generateQuestionContent} />
+                </div>
+            </div>
+        </div>
+    );
 
     render() {
         return (
             <div>
-                {this.displayQuestion()}
+                {this.renderQuestion()}
             </div>
         );
     };

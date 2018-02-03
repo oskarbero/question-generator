@@ -1,26 +1,49 @@
 import React from 'react';
 import {
-    Menu,
-    MenuItem,
-    Paper
+    Paper,
+    List,
+    ListItem,
+    Divider
 } from 'material-ui';
+import QuestionAnswerIcon from 'material-ui/svg-icons/action/question-answer';
+import SettingsIcon from 'material-ui/svg-icons/action/settings';
 
-const style = {
-    display: 'inline-block',
-    zDepth: '5px' 
-};
+const MainMenu = ({ itemClickHandler }) => {
+    const handler = (name) => (itemClickHandler.bind(undefined, name));
 
-const MainMenu = ({itemClickHandler}) => {
+    const QuestionSubMenu = () => ([
+        <ListItem
+            key={1}
+            primaryText="Drug Category"
+            onClick={handler("Drug Category")}
+        />,
+        <ListItem
+            key={2}
+            primaryText="ADRs"
+            onClick={handler("ADRs")}
+        />
+    ]);
+    
     return (
-        <Paper style={style}>
-            <Menu onItemClick={itemClickHandler} >
-                <MenuItem>
-                    Drug Category Questions
-                </MenuItem>
-                <MenuItem>
-                    Category Settings
-                </MenuItem>
-            </Menu>
+        <Paper>
+            <List>
+                <ListItem 
+                    primaryText="Question Generator"
+                    onClick={handler('Question Generator')}
+                    initiallyOpen={true}
+                    primaryTogglesNestedList={true}
+                    leftIcon={<QuestionAnswerIcon/>}
+                    nestedItems={QuestionSubMenu()}
+                >
+                </ListItem>
+                <Divider/>
+                <ListItem
+                    primaryText="Settings"
+                    leftIcon={<SettingsIcon/>}
+                    onClick={handler("Settings")}
+                />
+            </List>
+         
         </Paper>
     );
 }

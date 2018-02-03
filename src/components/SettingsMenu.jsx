@@ -82,16 +82,12 @@ class SettingsMenu extends Component {
         return (
             <div>
                 <h1>Settings
-
                 <Toggle
                     label={' '}
                     toggled={this.state.toggle['TOGGLE_ALL']}
                     onToggle={this.toggleAllCategories.bind(this)}
-
-                // toggled={this.state.toggle[category]}
-                // onToggle={this.setCategoryActive.bind(this, category)}
                 />
-        <Divider style={{ marginTop: '1%' }} />
+            <Divider style={{ marginTop: '1%' }} />
                 </h1>
                 <List>
                     <Subheader>Categories included</Subheader>

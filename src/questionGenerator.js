@@ -4,11 +4,12 @@ import * as _ from 'lodash';
 // add constructor that initializes the drug list.
 // Maybe this will go to a container object ? 
 class Question {
-    constructor(question, answer, rawData, answerData) {
+    constructor(question, answer, rawData, answerData, type) {
         this.question = question || "";
         this.answer = answer || "";
         this.fullData = rawData || {};
         this.answerData = answerData || {};
+        this.type = type || '';
     }
 }
 
@@ -22,7 +23,7 @@ const getRandomCategory = (drugList) => {
 const getRandomDrug = category => (category[_.random(0, category)] || {});
 
 // We assume that drugList is already filtered according to settings when passed in.
-export const randomCategoryQuestion = (drugList) => {
+ export const categoryQuestion = (drugList) => {
     const categoryData = getRandomCategory(drugList);
     const drug = getRandomDrug(categoryData);
     const drugName = drug["DRUG NAME"];
@@ -39,32 +40,47 @@ export const randomCategoryQuestion = (drugList) => {
             `What category does the drug "${drugName}" belong to?`,
             `${categoryName}`,
             categoryData,
-            drug
+            drug,
+            'Drug Category'
         )
     }
 }
 
 
-export const ADRQuestion = drugList => {
-    // Go through list of adrs for a category 
-    // see if they are not all the same
-    // pick the drugs that differ
-    // ask which drug would you switch patient to
-    // if he/she experienced the unique ADR
-    // List options without that ADR 
-
-    // BONUS: add rating ^ v for questions that were good / bad ...
-    // potential for machine learning ?? 
-
+ export const adrQuestion = drugList => {
+    // const specialMap = {
+    //     '↓': 'lower'
+    // };
     const categoryData = getRandomCategory(drugList);
 
+    // const clearNewline = val => (val ? val.replace(/n/g, '') : val);
     
     const getUniqueSideEffects /* no thanks */ = (category) => {
-        const unique = _.uniqBy(category, "ADR's");
-        console.log(unique);
+        const drugs = category.map(drug => {
+            const sideEffects = drug["ADRS"] ? (drug.ADRS.replace(/\n/g, "")).split(',') : [];
+            return {
+                drug,
+                sideEffects 
+            };
+        }
+        );
+        console.log(drugs.map(d => d.sideEffects));
+        // const unique = _.uniqBy(category, "ADR's");
+        
     }
     getUniqueSideEffects(categoryData);
 
+    return {
+        displayAnswer: false,
+        displayQuestion: true,
+        prompt: new Question(
+            `ADR question..`,
+            `${categoryData}`,
+            categoryData,
+            {},
+            'ADRs'
+        )
+    }
     // 1. get random category 
     // 2. go through drugs 
     //      - look at ADR 
