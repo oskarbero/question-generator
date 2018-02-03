@@ -44,8 +44,9 @@ app.get('/getDrugList', function(req, res) {
 
 app.get('/getActiveDrugList', function(req, res) {
     const drugList = getDrugList();
-    const active = getSettings();
-    res.send({drugList, active});
+    const settings = getSettings();
+
+    res.send({drugList, settings});
 });
 
           

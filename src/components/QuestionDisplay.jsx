@@ -5,7 +5,7 @@ import Divider from 'material-ui/Divider';
 import { apiGet } from './Api';
 import { categoryQuestion, adrQuestion } from '../questionGenerator';
 
-import './App.css';
+import '../stylesheets/App.css';
 
 
 class QuestionDisplay extends Component {

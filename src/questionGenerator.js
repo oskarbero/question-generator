@@ -13,7 +13,7 @@ class Question {
     }
 }
 
-const getRandomCategory = (drugList) => { 
+const getRandomCategory = (drugList) => {
     const numDrugCategories = Object.keys(drugList).length;
     const categoryIdx = _.random(0, numDrugCategories - 1);
     const categoryName = Object.keys(drugList)[categoryIdx];
@@ -23,7 +23,7 @@ const getRandomCategory = (drugList) => {
 const getRandomDrug = category => (category[_.random(0, category)] || {});
 
 // We assume that drugList is already filtered according to settings when passed in.
- export const categoryQuestion = (drugList) => {
+export const categoryQuestion = (drugList) => {
     const categoryData = getRandomCategory(drugList);
     const drug = getRandomDrug(categoryData);
     const drugName = drug["DRUG NAME"];
@@ -47,27 +47,32 @@ const getRandomDrug = category => (category[_.random(0, category)] || {});
 }
 
 
- export const adrQuestion = drugList => {
+const allSameADRs = (sideEffectList) => {
+
+}
+
+export const adrQuestion = drugList => {
     // const specialMap = {
     //     '↓': 'lower'
     // };
     const categoryData = getRandomCategory(drugList);
 
     // const clearNewline = val => (val ? val.replace(/n/g, '') : val);
-    
+
     const getUniqueSideEffects /* no thanks */ = (category) => {
         const drugs = category.map(drug => {
             const sideEffects = drug["ADRS"] ? (drug.ADRS.replace(/\n/g, "")).split(',') : [];
             return {
                 drug,
-                sideEffects 
+                sideEffects
             };
         }
         );
         console.log(drugs.map(d => d.sideEffects));
-        // const unique = _.uniqBy(category, "ADR's");
-        
+        const unique = _.uniqBy(category, "ADRs");
+
     }
+
     getUniqueSideEffects(categoryData);
 
     return {
@@ -75,7 +80,7 @@ const getRandomDrug = category => (category[_.random(0, category)] || {});
         displayQuestion: true,
         prompt: new Question(
             `ADR question..`,
-            `${categoryData}`,
+            `Type not implemented yet`,
             categoryData,
             {},
             'ADRs'

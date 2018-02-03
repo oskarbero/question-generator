@@ -8,7 +8,7 @@ import MainMenu from './MainMenu';
 import QuestionDisplay from './QuestionDisplay';
 import SettingsMenu from './SettingsMenu';
 
-import './App.css';
+import '../stylesheets/App.css';
 
 class App extends Component {
   constructor(props, context) {
