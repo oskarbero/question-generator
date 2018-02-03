@@ -19,7 +19,7 @@
 [class*="col-"] {
     float: left;
     padding: 15px;
-    border: 1px solid rgb(0, 0, 0);
+    /* border: 1px solid rgb(0, 0, 0); */
 }
 
 .row::after {
