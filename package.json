@@ -22,7 +22,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "deploy": "rm -f ./src/envConfig.js && react-scripts build && sh build.bat",
+    "deploy": "react-scripts build && sh build.bat",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },

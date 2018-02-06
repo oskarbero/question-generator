@@ -1,3 +1,9 @@
+## AWS Configs
+
+You need to have access to the S3 bucket so please contact me (berooskar@gmail.com).
+Your AWS acess key id and private access key go in the .env config in their respective
+REACT_APP_ variables
+
 ## AWS on Windows 10
 
 AWS cli on windows 10 does not work well with `git-bash`
