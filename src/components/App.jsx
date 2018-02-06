@@ -7,7 +7,6 @@ import MainMenu from './MainMenu';
 
 import QuestionDisplay from './QuestionDisplay';
 import SettingsMenu from './SettingsMenu';
-
 import '../stylesheets/App.css';
 
 class App extends Component {
