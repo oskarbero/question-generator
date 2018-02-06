@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './components/App';
 import mainMenuReducer from './reducers';
-import registerServiceWorker from './registerServiceWorker';
+// import registerServiceWorker from './registerServiceWorker';
 
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
@@ -17,8 +17,7 @@ const render = () => ReactDOM.render(
     rootElement
 )
 
-registerServiceWorker();
 
-render()
 store.subscribe(render);
+render()
 

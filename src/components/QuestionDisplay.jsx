@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import RaisedButton from 'material-ui/RaisedButton';
 import Divider from 'material-ui/Divider';
-import { apiGet } from './Api';
+import { getActive } from './Api';
 import { categoryQuestion, adrQuestion } from '../questionGenerator';
 
 import '../stylesheets/App.css';
@@ -29,7 +29,7 @@ class QuestionDisplay extends Component {
         this.generateQuestionContent = this.generateQuestionContent.bind(this);
         this.renderQuestion = this.renderQuestion.bind(this);
 
-        apiGet('/getActiveDrugList')
+        getActive()
             .then((resp) => {
                 const active = {}
                 for (const cat in resp.active) {

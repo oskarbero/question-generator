@@ -6,7 +6,7 @@ import {
     Divider,
     Toggle
 } from 'material-ui';
-import { apiGet, apiPost } from './Api';
+import { setConfig, getDrugList, getConfig } from './Api';
 
 class SettingsMenu extends Component {
     constructor(props) {
@@ -16,31 +16,41 @@ class SettingsMenu extends Component {
         this.updateActiveCategories = this.updateActiveCategories.bind(this);
         this.toggleAllCategories = this.toggleAllCategories.bind(this);
 
-        apiGet('/getCategories')
-            .then(this.updateActiveCategories.bind(this));
-        
-        apiGet('/getDrugList')
-            .then((resp) => {
-                this.setState(Object.assign({}, this.state, {drugList: resp}));
-            })
+        function updateConfig(resp) {
+            this.setState(Object.assign({}, this.state, { toggle:  JSON.parse(resp.Body) }));
+        }
+        function updateDrugList(resp) {
+            this.setState(Object.assign({}, this.state, { drugList:  JSON.parse(resp.Body) }));
+        }
+        getConfig().then(updateConfig.bind(this)); 
+
+        getDrugList().then(updateDrugList.bind(this))
 
         this.state = {
             drugList: {},
             toggle: {}
         }
     }
-
-    updateActiveCategories = (resp) => {
-        this.setState(Object.assign({}, this.state, { toggle: resp }));
+    updateConfig(newConf) {
+        this.setState(Object.assign({}, this.state, {toggle: newConf}));
     }
-
+   
+    updateActiveCategories = (resp) => {
+        const bodyResp = JSON.parse(resp.Body)
+        const newState = Object.assign({}, this.state, { toggle:  bodyResp, drugList: this.state.drugList ? this.state.drugList : bodyResp });
+        this.setState(newState);
+    }
+    
     setCategoryActive = (category, event, isInputChecked) => {
         this.toggled = isInputChecked;
-        const body = {};
-        body[category] = isInputChecked;
+        const newSetting = {}
+        newSetting[category] = isInputChecked;
 
-        apiPost('/setCategories', body)
-            .then(this.updateActiveCategories.bind(this));
+        const body = Object.assign({},this.state.toggle);
+
+        const newActive = Object.assign({}, this.state.toggle, newSetting);
+        
+        setConfig(body).then(this.updateConfig.bind(this,newActive));
     }
 
     toggleAllCategories = (event, isInputChecked) => {
@@ -50,8 +60,7 @@ class SettingsMenu extends Component {
         };
         Object.keys(this.state.drugList).forEach(val => body[val] = isInputChecked);
 
-        apiPost('/setCategories', body)
-            .then(this.updateActiveCategories.bind(this));
+        setConfig(body).then(this.updateConfig.bind(this, body))
     }
 
 
