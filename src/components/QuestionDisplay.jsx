@@ -4,7 +4,6 @@ import RaisedButton from 'material-ui/RaisedButton';
 import Divider from 'material-ui/Divider';
 import { getActive } from './Api';
 import { categoryQuestion, adrQuestion } from '../questionGenerator';
-
 import '../stylesheets/App.css';
 
 
@@ -31,13 +30,13 @@ class QuestionDisplay extends Component {
 
         getActive()
             .then((resp) => {
-                const active = {}
-                for (const cat in resp.active) {
-                    if (resp.active[cat]) {
-                        active[cat] = resp.drugList[cat];
-                    }
-                }
-                setInitialState(active);
+                // const active = {}
+                // for (const cat in resp.active) {
+                //     if (resp.active[cat]) {
+                //         active[cat] = resp.drugList[cat];
+                //     }
+                // }
+                setInitialState(resp);
             });
     }
 

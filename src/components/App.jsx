@@ -3,6 +3,7 @@ import {
   AppBar,
   MuiThemeProvider,
 } from 'material-ui'
+import ActiveSettings from '../containers/ActiveSettings';
 import MainMenu from './MainMenu';
 
 import QuestionDisplay from './QuestionDisplay';
@@ -32,7 +33,7 @@ class App extends Component {
       case 'Drug Category':
         return <QuestionDisplay questionType={this.state.itemClicked} lastClicked={this.state.lastClicked}/>;
       case 'Settings':
-        return <SettingsMenu />;
+        return <ActiveSettings />
       case 'Question Generator':
       default:
         // Dummy content

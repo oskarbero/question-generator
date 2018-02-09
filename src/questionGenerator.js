@@ -46,18 +46,11 @@ export const categoryQuestion = (drugList) => {
     }
 }
 
-
-const allSameADRs = (sideEffectList) => {
-
-}
-
 export const adrQuestion = drugList => {
     // const specialMap = {
     //     '↓': 'lower'
     // };
     const categoryData = getRandomCategory(drugList);
-
-    // const clearNewline = val => (val ? val.replace(/n/g, '') : val);
 
     const getUniqueSideEffects /* no thanks */ = (category) => {
         const drugs = category.map(drug => {
@@ -69,7 +62,7 @@ export const adrQuestion = drugList => {
         }
         );
         console.log(drugs.map(d => d.sideEffects));
-        const unique = _.uniqBy(category, "ADRs");
+        // const unique = _.uniqBy(category, "ADRs");
 
     }
 

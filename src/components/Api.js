@@ -7,7 +7,6 @@ AWS.config.update({
         process.env.REACT_APP_AWS_ACCESS_KEY_ID,
         process.env.REACT_APP_AWS_SECRET_ACCESS_KEY)
     });
-
 const s3 = new AWS.S3({ apiVersion: '2006-03-01' });
 
 export const getDrugList = async () => {
@@ -17,6 +16,7 @@ export const getDrugList = async () => {
     };
     return s3.getObject(getOptions).promise()
 } 
+
 export const getConfig = async () => {
     const getOptions = {
         Bucket: 'question-gen-resources',
@@ -36,7 +36,19 @@ export const setConfig = async (body) => {
 }
 
 export const getActive = async () => {
-    const activeDrugs = await getConfig();
-    const drugList = await getDrugList();
-    return {active: JSON.parse(activeDrugs.Body), drugList: JSON.parse(drugList.Body)};
+
+    const config = await getConfig();
+    const activeDrugs = JSON.parse(config);
+
+    const drugs = await getDrugList();
+    const drugList = JSON.parse(drugs);
+
+    // TODO GetActive fix
+    const active = Object.keys(drugList).reduce((prevState, category) => {
+        prevState[category] = activeDrugs[category];
+        return prevState;
+    }, {})
+    active['TOGGLE_ALL'] = activeDrugs['TOGGLE_ALL'];
+
+    return active;
 }
