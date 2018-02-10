@@ -1,8 +1,7 @@
-
 import React, { Component } from 'react';
 import RaisedButton from 'material-ui/RaisedButton';
 import Divider from 'material-ui/Divider';
-import { getActive } from './Api';
+import { getActive } from '../Api';
 import { categoryQuestion, adrQuestion } from '../questionGenerator';
 import '../stylesheets/App.css';
 

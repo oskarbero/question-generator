@@ -1,32 +1,38 @@
 
 import { connect } from 'react-redux';
-import { toggleCategory, toggleAllCategories } from '../actions';
+import {generateQuestion,showAnswer} from '../actions/questionDisplayActions'
 import QuestionDisplay from '../components/QuestionDisplay';
 
+const initialState = {
+    drugList: {},
+    prompt: {
+        showAnswer: false,
+        showPrompt: false,
+        showQuestion: false
+    },
+    questionType: 'Category'
+}
 
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = (state = initialState, ownProps) => {
     return {
-        toggle: state.toggle,
-        drugList: state.drugList
+        drugList: state.drugList,
+        prompt: {
+            ...state.questionPrompt
+        }
     };
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        // ID is category name
-        onCategoryClick: (id, event, status) => {
-            dispatch(toggleCategory(id, status))
-        },
-        onAllCategoriesClick: (event, status) => {
-            dispatch(toggleAllCategories(status));
-        }
+        onGenerateClick: (type) => dispatch(generateQuestion(type)),
+        onShowAnswerClick: (status) => dispatch(showAnswer(status))
     }
 }
 
 
-const ActiveSettings = connect(
+const QuestionContainer = connect(
     mapStateToProps,
     mapDispatchToProps
-)(TestSettings);
+)(QuestionDisplay);
 
-export default ActiveSettings;
+export default QuestionContainer;

@@ -3,7 +3,6 @@ import {
     TOGGLE_ALL_CATEGORIES,
 } from '../actions'
 import { 
-
     RECEIVE_CONFIG,
     RECEIVE_DRUG_LIST,
     REQUEST_UPDATE_CONFIG,
@@ -12,7 +11,9 @@ import {
 
 const initialState = {
     drugList: {},
-    toggle: {}
+    toggle: {},
+    prompt: {},         // Question Prompt (state of QuestionDisplay)
+    questionType: "",   // State of Question Display
 }
 
 const toggleAll = (state, action) => {

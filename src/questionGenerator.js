@@ -35,6 +35,7 @@ export const categoryQuestion = (drugList) => {
 
     return {
         displayAnswer: false,
+        displayPrompt: true,
         displayQuestion: true,
         prompt: new Question(
             `What category does the drug "${drugName}" belong to?`,
@@ -71,6 +72,8 @@ export const adrQuestion = drugList => {
     return {
         displayAnswer: false,
         displayQuestion: true,
+        displayPrompt: true,
+        questionType: 'ADR',        // TODO: switch to using QUESTION_TYPE from ./actions
         prompt: new Question(
             `ADR question..`,
             `Type not implemented yet`,

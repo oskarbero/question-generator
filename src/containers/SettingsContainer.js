@@ -1,6 +1,9 @@
 import { connect } from 'react-redux';
 import { toggleAllCategories, updateActiveCategory, updateAllCategories } from '../actions/asyncActions';
 import SettingsMenu from '../components/SettingsMenu';
+const initialState = {
+
+}
 
 const mapStateToProps = (state={toggle: {}, drugList: {}}, ownProps) => {
     return {
@@ -21,9 +24,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 }
 
 
-const ActiveSettings = connect(
+const SettingsContainer = connect(
     mapStateToProps,
     mapDispatchToProps
 )(SettingsMenu);
 
-export default ActiveSettings;
+export default SettingsContainer;

@@ -1,5 +1,5 @@
 
-import {getConfig, setConfig, getDrugList} from '../components/Api.js';
+import {getConfig, setConfig, getDrugList} from '../Api.js';
 /**
  *  Async GET actions for CONFIG
  */
