@@ -28,7 +28,7 @@ const TestSettings = ({ drugList, toggle, onCategoryClick, onAllCategoriesClick 
         <div>
             <h1>TEST Settings
                 <Toggle
-                    toggled={toggle['TOGGLE_ALL']}
+                    toggled={toggle ? toggle['TOGGLE_ALL']: false}
                     onToggle={onAllCategoriesClick}
                 />
                 <Divider style={{ marginTop: '1%' }} />

@@ -5,7 +5,6 @@ import {createLogger } from 'redux-logger';
 import App from './components/App';
 import rootReducer from './reducers';
 import {fetchConfig, fetchDrugList} from './actions/asyncActions';
-// import registerServiceWorker from './registerServiceWorker';
 
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
@@ -31,7 +30,8 @@ const render = () => ReactDOM.render(
 
 store.subscribe(render);
 
-// Initialize the data from S3
+// Initialize the data from S3 it's async so let 'er rip!
+// Response is just logged to console.. no need for more at the moment
 store.dispatch(fetchConfig()).then(()=> console.log(store.getState));
 store.dispatch(fetchDrugList()).then(()=> console.log(store.getState));
 

@@ -67,7 +67,7 @@ class QuestionDisplay extends Component {
             return (
                 <div>
                     <Divider style={{ marginBottom: '1%' }} />
-                    <h2>Question:  {this.state.prompt.question}</h2>
+                    <h2>Question:  {this.state.question.ques}</h2>
                     <h2>Answer:    {this.state.displayAnswer ? this.state.prompt.answer : null} </h2>
                 </div>
             );

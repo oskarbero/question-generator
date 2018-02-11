@@ -7,6 +7,7 @@
     "excel-as-json": "^2.0.1",
     "fs": "0.0.1-security",
     "lodash": "^4.17.4",
+    "lodash.merge": "^4.6.1",
     "lodash.random": "^3.2.0",
     "log4js": "^2.4.1",
     "material-ui": "^0.20.0",

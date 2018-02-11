@@ -4,10 +4,10 @@ import {
   MuiThemeProvider,
 } from 'material-ui'
 import Settings from '../containers/SettingsContainer';
+import QuestionContainer from '../containers/QuestionContainer';
 import MainMenu from './MainMenu';
 import TestQuestionDisplay from './TestQuestionDisplay';
-import QuestionDisplay from './QuestionDisplay';
-import SettingsMenu from './SettingsMenu';
+// import QuestionDisplay from './QuestionDisplay';
 import '../stylesheets/App.css';
 
 class App extends Component {
@@ -31,11 +31,11 @@ class App extends Component {
     switch (this.state.itemClicked) {
       case 'ADRs':
       case 'Drug Category':
-        return <QuestionDisplay questionType={this.state.itemClicked} lastClicked={this.state.lastClicked}/>;
+        return <QuestionContainer />;
       case 'Settings':
         return <Settings />
       case 'Test': 
-        return <TestQuestionDisplay />
+        return <QuestionContainer />
       case 'Question Generator':
       default:
         // Dummy content

@@ -61,7 +61,9 @@ export function updateActiveCategory(active, id, status) {
         // We opt for switching local state before sending off to datastore
         // This should result in better responsiveness and the data is not critical (as of now)
         dispatch(requestUpdateConfig(newConfig))
-        return setConfig(newConfig).then((resp) => console.log('Set one config', resp)) 
+        return setConfig(newConfig).then((resp) => {
+            console.log('Set one config',resp.Body);
+        }) 
     }
 }
 

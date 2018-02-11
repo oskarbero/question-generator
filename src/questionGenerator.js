@@ -20,29 +20,37 @@ const getRandomCategory = (drugList) => {
     return drugList[categoryName];
 }
 
-const getRandomDrug = category => (category[_.random(0, category)] || {});
+const getRandomDrug = category => {
+    if(!category) {
+        return {}
+    }
+    const idx = _.random(category.length - 1);
+    return category[idx] || {}
+};
 
 // We assume that drugList is already filtered according to settings when passed in.
-export const categoryQuestion = (drugList) => {
+export const categoryQuestion = (drugList, lastQuestionInfo) => {
+    if(!drugList) {
+        return;
+    }
     const categoryData = getRandomCategory(drugList);
+    if(!categoryData) {
+        return;
+    }
     const drug = getRandomDrug(categoryData);
     const drugName = drug["DRUG NAME"];
     const categoryName = drug["CATEGORY"];
-
-    if (!drugName || !categoryName) {
-        return null;
-    }
 
     return {
         displayAnswer: false,
         displayPrompt: true,
         displayQuestion: true,
-        prompt: new Question(
+        question: new Question(
             `What category does the drug "${drugName}" belong to?`,
             `${categoryName}`,
             categoryData,
             drug,
-            'Drug Category'
+            'CATEGORY'
         )
     }
 }

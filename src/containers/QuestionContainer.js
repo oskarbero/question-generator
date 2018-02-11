@@ -1,31 +1,17 @@
 
 import { connect } from 'react-redux';
-import {generateQuestion,showAnswer} from '../actions/questionDisplayActions'
-import QuestionDisplay from '../components/QuestionDisplay';
+import {generateQuestion,showAnswer} from '../actions'
+import TestQuestionDisplay from '../components/TestQuestionDisplay'
 
-const initialState = {
-    drugList: {},
-    prompt: {
-        showAnswer: false,
-        showPrompt: false,
-        showQuestion: false
-    },
-    questionType: 'Category'
+
+const mapStateToProps = (state) => {
+    return state;
 }
 
-const mapStateToProps = (state = initialState, ownProps) => {
+const mapDispatchToProps = (dispatch, ownProps) => {
     return {
-        drugList: state.drugList,
-        prompt: {
-            ...state.questionPrompt
-        }
-    };
-}
-
-const mapDispatchToProps = dispatch => {
-    return {
-        onGenerateClick: (type) => dispatch(generateQuestion(type)),
-        onShowAnswerClick: (status) => dispatch(showAnswer(status))
+        onGenerateClick: (type, drugList) => {dispatch(generateQuestion())},
+        onShowAnswerClick: (status) => {dispatch(showAnswer(status))}
     }
 }
 
@@ -33,6 +19,6 @@ const mapDispatchToProps = dispatch => {
 const QuestionContainer = connect(
     mapStateToProps,
     mapDispatchToProps
-)(QuestionDisplay);
+)(TestQuestionDisplay);
 
 export default QuestionContainer;

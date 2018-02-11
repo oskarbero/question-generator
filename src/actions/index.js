@@ -21,43 +21,17 @@
  *      Redux will immediately throw when dispatching such an action, and you'll find the mistake sooner.
 */
 
-export const SHOW_ANSWER = 'SHOW_ANSWER'
-export const GENERATE_QUESTION = 'GENERATE_QUESTION'
-
-// TODO: remove
-
-export const TOGGLE_CATEGORY = 'TOGGLE_CATEGORY'
-export const TOGGLE_ALL_CATEGORIES = 'TOGGLE_ALL_CATEGORIES'
-
-export const toggleCategory = (id, status) => ({
-    type: 'TOGGLE_CATEGORY',
-    id,
-    status
-});
-
-export const toggleAllCategories = () => ({
-    type: 'TOGGLE_ALL',
-})
-
-export const generateQuestion = id => {
-    return {
-        type: GENERATE_QUESTION,
-        id
-    }
-}
-
-export const showAnswer = status => {
-    return {
-        type: SHOW_ANSWER,
-        status
-    }
-}
-
-/**
- * 
- */
 export const QUESTION_TYPE = {
     NONE: 'NONE',
     ADR: 'ADR',
-    CATEGORY: 'CATEGORY',
+    CATEGORY: 'CATEGORY'
 }
+
+export const SHOW_ANSWER = 'SHOW_ANSWER'
+export const GENERATE_QUESTION = 'GENERATE_QUESTION'
+
+export const RESET_QUESTION_DISPLAY = 'RESET_QUESTION_DISPLAY'
+
+export const resetQuestionDisplay = () => ({type: RESET_QUESTION_DISPLAY})
+export const generateQuestion = () => ({type: GENERATE_QUESTION})
+export const showAnswer = status => ({type: SHOW_ANSWER, status})
