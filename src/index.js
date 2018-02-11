@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import thunkMiddleware from 'redux-thunk';
 import {createLogger } from 'redux-logger';
-import App from './components/App';
+import App from './containers/AppContainer';
 import rootReducer from './reducers';
 import {fetchConfig, fetchDrugList} from './actions/asyncActions';
 

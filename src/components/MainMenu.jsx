@@ -8,8 +8,8 @@ import {
 import QuestionAnswerIcon from 'material-ui/svg-icons/action/question-answer';
 import SettingsIcon from 'material-ui/svg-icons/action/settings';
 
-const MainMenu = ({ itemClickHandler }) => {
-    const handler = (name) => (itemClickHandler.bind(undefined, name));
+const MainMenu = ({ onItemClick }) => {
+    const handler = (name) => (onItemClick.bind(undefined, name));
 
     const QuestionSubMenu = () => ([
         <ListItem

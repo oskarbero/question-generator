@@ -26,12 +26,12 @@ export const QUESTION_TYPE = {
     ADR: 'ADR',
     CATEGORY: 'CATEGORY'
 }
-
 export const SHOW_ANSWER = 'SHOW_ANSWER'
 export const GENERATE_QUESTION = 'GENERATE_QUESTION'
-
 export const RESET_QUESTION_DISPLAY = 'RESET_QUESTION_DISPLAY'
+export const MAIN_MENU_CLICK = 'MAIN_MENU_CLICK'
 
-export const resetQuestionDisplay = () => ({type: RESET_QUESTION_DISPLAY})
-export const generateQuestion = () => ({type: GENERATE_QUESTION})
-export const showAnswer = status => ({type: SHOW_ANSWER, status})
+export const mainMenuClick = id => ({ type: MAIN_MENU_CLICK, id })
+export const resetQuestionDisplay = () => ({ type: RESET_QUESTION_DISPLAY })
+export const generateQuestion = () => ({ type: GENERATE_QUESTION })
+export const showAnswer = status => ({ type: SHOW_ANSWER, status })

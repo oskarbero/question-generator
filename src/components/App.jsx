@@ -9,34 +9,15 @@ import MainMenu from './MainMenu';
 import '../stylesheets/App.css';
 
 class App extends Component {
-  constructor(props, context) {
-    super(props, context);
-    this.state = {
-      itemClicked: 'Question Generator',
-      lastClicked: ''
-    };
-    this.handleMenuItemClick = this.handleMenuItemClick.bind(this);
-    this.getRequestedContent = this.getRequestedContent.bind(this);
-  };
-
-  handleMenuItemClick = (itemClicked) => {
-    // To intoxicated to read this but it works .. it's stupid but it works.
-    let lastClicked = this.state.itemClicked !== itemClicked ? itemClicked : this.state.itemClicked;
-    this.setState(Object.assign({}, this.state, { itemClicked }, {lastClicked}));
-  }
-
   getRequestedContent = () => {
-    switch (this.state.itemClicked) {
+    switch (this.props.menuItemClicked) {
       case 'ADRs':
       case 'Drug Category':
         return <QuestionContainer />;
       case 'Settings':
         return <Settings />
-      case 'Test': 
-        return <QuestionContainer />
       case 'Question Generator':
       default:
-        // Dummy content
         return <h1>Hello, welcome to my question generator fren!</h1>;
     }
   }
@@ -56,7 +37,7 @@ class App extends Component {
           </div>
           <div className="row">
             <div className="col-2">
-              <MainMenu itemClickHandler={this.handleMenuItemClick} />
+              <MainMenu onItemClick={this.props.onItemClick} />
             </div>
             <div className="col-10">
               {this.getRequestedContent()}
@@ -67,6 +48,5 @@ class App extends Component {
     );
   }
 }
-
 
 export default App;

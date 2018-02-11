@@ -2,6 +2,7 @@ import {
     SHOW_ANSWER,
     QUESTION_TYPE,
     GENERATE_QUESTION,
+    MAIN_MENU_CLICK,
     RESET_QUESTION_DISPLAY,
 } from '../actions';
 import {
@@ -81,6 +82,8 @@ const rootReducer = (state = initialState, action) => {
 
         case RESET_QUESTION_DISPLAY:
             return { ...state, ...{ prompt: initialState.prompt } }
+        case MAIN_MENU_CLICK: 
+            return { ...state, ...{menuItemClicked: action.id} }
 
         default:
             return state;
