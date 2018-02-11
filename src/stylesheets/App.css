@@ -38,6 +38,12 @@
 
 .sub-head {
     grid-area: sub-header;
+    display: 'flex';
+    align-items: 'baseline';
+}
+.flex-header {
+    display: 'flex';
+    align-items: 'baseline';
 }
 .sub-content {
     grid-area: sub-content

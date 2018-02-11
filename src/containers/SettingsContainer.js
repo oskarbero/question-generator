@@ -10,8 +10,8 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     onCategoryClick: (active, id, event, status) => {
         dispatch(updateActiveCategory(active, id, status))
     },
-    onAllCategoriesClick: (drugList,event, status) => {
-        dispatch(updateAllCategories(drugList,status));
+    onAllCategoriesClick: (drugList, event, status) => {
+        dispatch(updateAllCategories(drugList, status));
     }
 })
 

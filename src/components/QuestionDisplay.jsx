@@ -24,19 +24,36 @@ const QuestionDisplay = ({
             )
         }
     }
+
+    const getCategoriesSelectedSubheader = () => (
+        <Subheader>
+            {`${Object.keys(activeDrugList).length} of ${Object.keys(drugList).length} categories selected`}
+        </Subheader>
+    )
+
+    const styles = {
+        flex: {
+            display: 'flex',
+            alignItems: 'baseline'
+        },
+        raisedButton: {
+            marginRight: '5px'
+        }
+    }
+
     return (
-        <div>
-            {/* <h1> Test Question Display </h1> */}
-            <h1>{questionType}
-                <Subheader>{`${Object.keys(activeDrugList).length} of ${Object.keys(drugList).length} categories selected`}</Subheader>
-            </h1>
-            <div>
+        <div className="sub-wrapper">
+            <div className="sub-header" style={styles.flex}>
+                <h1>{questionType}</h1>
+                {getCategoriesSelectedSubheader()}
+            </div>
+            <div className="sub-content">
                 {renderQuestionContent()}
-                <div className="row">
-                    <Divider style={{ marginBottom: '1%' }} />
-                    <RaisedButton style={{ float: 'left' }} label="Answer" onClick={onShowAnswerClick} />
-                    <RaisedButton style={{ float: 'left' }} label="Generate" onClick={onGenerateClick} />
-                </div>
+            </div>
+            <Divider style={{ marginBottom: '1%' }} />
+            <div className="sub-footer" style={styles.flex}>
+                <RaisedButton style={styles.raisedButton} label="Answer" onClick={onShowAnswerClick} />
+                <RaisedButton style={styles.raisedButton} label="Generate" onClick={onGenerateClick} />
             </div>
         </div>
     )

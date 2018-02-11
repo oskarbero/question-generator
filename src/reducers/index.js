@@ -9,7 +9,6 @@ import {
     RECEIVE_CONFIG,
     RECEIVE_DRUG_LIST,
     REQUEST_UPDATE_CONFIG,
-    REQUEST_UPDATE_ALL_CONFIGS,
 } from '../actions/asyncActions';
 import {
     adrQuestion,
@@ -28,14 +27,6 @@ const initialState = {
     },
     questionType: QUESTION_TYPE.CATEGORY,
 }
-
-const toggleAll = (state, action) => {
-    const toggle = Object.keys(state.drugList).reduce((prevState, category) => {
-        prevState[category] = action.status;
-        return prevState;
-    }, {})
-    return toggle;
-};
 
 const setShowAnswer = (state) => {
     return { ...state, ...{ displayAnswer: true } }

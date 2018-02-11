@@ -1,5 +1,5 @@
 
-import {getConfig, setConfig, getDrugList} from '../Api.js';
+import {getConfig, setConfig, getDrugList} from './s3Api';
 /**
  *  Async GET actions for CONFIG
  */
