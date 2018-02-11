@@ -82,6 +82,7 @@ const rootReducer = (state = initialState, action) => {
 
         case RESET_QUESTION_DISPLAY:
             return { ...state, ...{ prompt: initialState.prompt } }
+
         case MAIN_MENU_CLICK: 
             return { ...state, ...{menuItemClicked: action.id} }
 
