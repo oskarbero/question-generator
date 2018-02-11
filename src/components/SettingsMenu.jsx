@@ -24,19 +24,32 @@ const TestSettings = ({ drugList, toggle, onCategoryClick, onAllCategoriesClick 
         />
     )
 
-    return (
-        <div>
-            <h1>TEST Settings
+    const AllCategoriesToggle = () => (
+        <ListItem
+            key={"TOGGLE_ALL"}
+            primaryText={"Toggle All"}
+            rightToggle={
                 <Toggle
-                    toggled={toggle ? toggle['TOGGLE_ALL']: false}
-                    onToggle={onAllCategoriesClick}
+                    toggled={toggle ? toggle['TOGGLE_ALL'] : false}
+                    onToggle={onAllCategoriesClick.bind(this, drugList)}
                 />
-            </h1>
-                <Divider style={{ marginTop: '1%' }} />
-            <List>
+            }
+        />
+    )
+
+    return (
+        <div className="sub-wrapper">
+            <div className="sub-header">
+                <h1>TEST Settings </h1>
+                <Divider />
                 <Subheader>Categories included</Subheader>
-                {Object.keys(drugList).map(CategoryListItem)}
-            </List>
+            </div>
+            <div className="sub-content">
+                <List>
+                    {AllCategoriesToggle()}
+                    {Object.keys(drugList).map(CategoryListItem)}
+                </List>
+            </div>
         </div>
     )
 }

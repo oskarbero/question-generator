@@ -25,23 +25,19 @@ class App extends Component {
   render() {
     return (
       <MuiThemeProvider>
-        <div>
+        <div className="wrapper">
           <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-          <div className="row">
-            <div className="MainAppBar col-12">
-              <AppBar
-                title="Taia's House Of Drugs"
-                iconClassNameRight="muidocs-icon-navigation-expand-more"
-              />
-            </div>
+          <div className="main-head">
+            <AppBar
+              title="Taia's House Of Drugs"
+              iconClassNameRight="muidocs-icon-navigation-expand-more"
+            />
           </div>
-          <div className="row">
-            <div className="col-2">
-              <MainMenu onItemClick={this.props.onItemClick} />
-            </div>
-            <div className="col-10">
-              {this.getRequestedContent()}
-            </div>
+          <div className="main-menu">
+            <MainMenu onItemClick={this.props.onItemClick} />
+          </div>
+          <div className="main-content">
+            {this.getRequestedContent()}
           </div>
         </div>
       </MuiThemeProvider>

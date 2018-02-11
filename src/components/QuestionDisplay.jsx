@@ -5,7 +5,14 @@ import Subheader from 'material-ui/Subheader'
 import '../stylesheets/App.css';
 
 
-const TestQuestionDisplay = ({drugList,activeDrugList, prompt, questionType, onGenerateClick, onShowAnswerClick }) => {
+const QuestionDisplay = ({
+    drugList,
+    activeDrugList,
+    prompt,
+    questionType,
+    onGenerateClick,
+    onShowAnswerClick
+}) => {
     const renderQuestionContent = () => {
         if (prompt && prompt.displayPrompt) {
             return (
@@ -20,9 +27,9 @@ const TestQuestionDisplay = ({drugList,activeDrugList, prompt, questionType, onG
     return (
         <div>
             {/* <h1> Test Question Display </h1> */}
-                <h1>{questionType}
-                    <Subheader>{`${Object.keys(activeDrugList).length} of ${Object.keys(drugList).length} categories selected`}</Subheader>
-                </h1>
+            <h1>{questionType}
+                <Subheader>{`${Object.keys(activeDrugList).length} of ${Object.keys(drugList).length} categories selected`}</Subheader>
+            </h1>
             <div>
                 {renderQuestionContent()}
                 <div className="row">
@@ -35,4 +42,4 @@ const TestQuestionDisplay = ({drugList,activeDrugList, prompt, questionType, onG
     )
 }
 
-export default TestQuestionDisplay;
+export default QuestionDisplay;

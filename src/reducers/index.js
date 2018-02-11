@@ -73,9 +73,6 @@ const rootReducer = (state = initialState, action) => {
         case REQUEST_UPDATE_CONFIG:
             return { ...state, ...{ toggle: action.config, activeDrugList: getActiveDrugs(state.drugList, action.config) } }
 
-        case REQUEST_UPDATE_ALL_CONFIGS:
-            return { ...state, ...{ toggle: toggleAll(state), activeDrugList: getActiveDrugs(state.drugList, action.config) } };
-
         case SHOW_ANSWER:
             return { ...state, ...{ prompt: setShowAnswer(state.prompt) } };
 

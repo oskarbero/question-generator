@@ -35,7 +35,6 @@ export function fetchConfig() {
     }
 }
 
-
 /**
  * Async POST actions for Config
  */
@@ -44,14 +43,6 @@ function requestUpdateConfig(config) {
     return {
         type: REQUEST_UPDATE_CONFIG,
         config
-    }
-}
-
-export const REQUEST_UPDATE_ALL_CONFIGS = 'REQUEST_UPDATE_ALL_CONFIGS'
-function requestUpdateAllConfigs(status) {
-    return {
-        type: REQUEST_UPDATE_ALL_CONFIGS,
-        status
     }
 }
 
@@ -73,8 +64,9 @@ export function updateAllCategories(drugList, status) {
             prev[category] = status
             return prev;
         }, {});
+        newConfig['TOGGLE_ALL'] = status;
 
-        dispatch(requestUpdateAllConfigs(newConfig))
+        dispatch(requestUpdateConfig(newConfig))
         return setConfig(newConfig).then(console.log.bind(this, 'Set all configs'));
     }
 }
