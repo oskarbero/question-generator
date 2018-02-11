@@ -62,6 +62,8 @@ const getActiveDrugs = (drugList, toggle) => {
     }, {})
 }
 
+const resolveQuestionType = (id) => (id === "Drug Category" ? "CATEGORY" : "ADRs");
+
 const rootReducer = (state = initialState, action) => {
     switch (action.type) {
         case RECEIVE_DRUG_LIST:
@@ -84,7 +86,7 @@ const rootReducer = (state = initialState, action) => {
             return { ...state, ...{ prompt: initialState.prompt } }
 
         case MAIN_MENU_CLICK: 
-            return { ...state, ...{menuItemClicked: action.id} }
+            return { ...state, ...{menuItemClicked: action.id, questionType: resolveQuestionType(action.id)} }
 
         default:
             return state;
