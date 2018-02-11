@@ -31,8 +31,8 @@ const TestSettings = ({ drugList, toggle, onCategoryClick, onAllCategoriesClick 
                     toggled={toggle ? toggle['TOGGLE_ALL']: false}
                     onToggle={onAllCategoriesClick}
                 />
-                <Divider style={{ marginTop: '1%' }} />
             </h1>
+                <Divider style={{ marginTop: '1%' }} />
             <List>
                 <Subheader>Categories included</Subheader>
                 {Object.keys(drugList).map(CategoryListItem)}

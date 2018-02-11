@@ -1,10 +1,11 @@
 import React from 'react';
 import RaisedButton from 'material-ui/RaisedButton';
 import Divider from 'material-ui/Divider';
+import Subheader from 'material-ui/Subheader'
 import '../stylesheets/App.css';
 
 
-const TestQuestionDisplay = ({drugList, prompt, questionType, onGenerateClick, onShowAnswerClick }) => {
+const TestQuestionDisplay = ({drugList,activeDrugList, prompt, questionType, onGenerateClick, onShowAnswerClick }) => {
     const renderQuestionContent = () => {
         if (prompt && prompt.displayPrompt) {
             return (
@@ -19,7 +20,9 @@ const TestQuestionDisplay = ({drugList, prompt, questionType, onGenerateClick, o
     return (
         <div>
             {/* <h1> Test Question Display </h1> */}
-                <h1>{questionType}</h1>
+                <h1>{questionType}
+                    <Subheader>{`${Object.keys(activeDrugList).length} of ${Object.keys(drugList).length} categories selected`}</Subheader>
+                </h1>
             <div>
                 {renderQuestionContent()}
                 <div className="row">
