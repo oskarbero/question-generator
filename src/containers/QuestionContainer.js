@@ -1,7 +1,7 @@
 
 import { connect } from 'react-redux';
 import {generateQuestion,showAnswer} from '../actions'
-import TestQuestionDisplay from '../components/TestQuestionDisplay'
+import QuestionDisplay from '../components/QuestionDisplay'
 
 
 const mapStateToProps = (state) => {
@@ -19,6 +19,6 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 const QuestionContainer = connect(
     mapStateToProps,
     mapDispatchToProps
-)(TestQuestionDisplay);
+)(QuestionDisplay);
 
 export default QuestionContainer;

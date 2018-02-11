@@ -6,8 +6,6 @@ import {
 import Settings from '../containers/SettingsContainer';
 import QuestionContainer from '../containers/QuestionContainer';
 import MainMenu from './MainMenu';
-import TestQuestionDisplay from './TestQuestionDisplay';
-// import QuestionDisplay from './QuestionDisplay';
 import '../stylesheets/App.css';
 
 class App extends Component {
