@@ -23,7 +23,7 @@
 
 export const QUESTION_TYPE = {
     NONE: 'NONE',
-    ADR: 'ADR',
+    ADR: 'ADRs',
     CATEGORY: 'CATEGORY'
 }
 export const SHOW_ANSWER = 'SHOW_ANSWER'

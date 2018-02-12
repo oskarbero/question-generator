@@ -44,7 +44,7 @@ const generateQuestion = (state) => {
     }
 }
 
-const getActiveDrugs = (drugList, toggle) => {
+const filterActiveDrugs = (drugList, toggle) => {
     return Object.keys(drugList).reduce((prevState, category) => {
         if (toggle[category]) {
             prevState[category] = drugList[category];
@@ -58,11 +58,11 @@ const resolveQuestionType = (id) => (id === "Drug Category" ? "CATEGORY" : "ADRs
 const rootReducer = (state = initialState, action) => {
     switch (action.type) {
         case RECEIVE_DRUG_LIST:
-            return { ...state, ...{ drugList: action.drugList, activeDrugList: getActiveDrugs(state.drugList, action.config) } }
+            return { ...state, ...{ drugList: action.drugList, activeDrugList: filterActiveDrugs(state.drugList, action.config)} }
 
         case RECEIVE_CONFIG:
         case REQUEST_UPDATE_CONFIG:
-            return { ...state, ...{ toggle: action.config, activeDrugList: getActiveDrugs(state.drugList, action.config) } }
+            return { ...state, ...{ toggle: action.config, activeDrugList: filterActiveDrugs(state.drugList, action.config) } }
 
         case SHOW_ANSWER:
             return { ...state, ...{ prompt: setShowAnswer(state.prompt) } };
