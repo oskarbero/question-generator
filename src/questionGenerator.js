@@ -58,66 +58,25 @@ export const categoryQuestion = (drugList, lastQuestionInfo) => {
 // FAR FAR FAR from done.
 export const adrQuestion = drugList => {
     
-    if(!drugList || drugList) {
+    if(!drugList) {
         return new Question();
     }
 
-    const category = getRandomCategory(drugList);
-    const splitAdrs = (str) => {
-        if(!str) {
-            return [];
-        }
-        const splitAdrs = str.replace(/\n/g, "").split(',');
-        return Array.isArray(splitAdrs) ? splitAdrs : [splitAdrs];
+    const adrIdx = uniqueAdrIndexByCategory(drugList);
+    const adrCategory = getRandomCategory(adrIdx);
+    if(!adrCategory) {
+        return new Question();
     }
+    const uniqueIdx = _.random(Object.keys(adrCategory).length - 1);
+    const unique = adrCategory[Object.keys(adrCategory)[uniqueIdx]];
+ 
 
-    const sideEffects = {};
-    category.forEach(drug => {
-         splitAdrs(drug.ADRS).forEach(adr => {
-            if(!sideEffects[adr]) {
-                sideEffects[adr] = [drug];
-            }
-            else {
-                sideEffects[adr].push(drug);
-            }
-        })
-        return drug;
-    });
-
-    const values = Object.values(sideEffects)
-    let maxLen = values.reduce((prev, cur) => (cur.length > prev ? cur.length : prev), 0);
-    let minLen = values.reduce((prev, cur) => (cur.length <= prev ? cur.length : prev), 0);
-    
-    const hasUnique = maxLen != minLen;
-    let unique;
-    let idx = 0;
-    if(hasUnique) {
-        // Unique side effect + drugs in there
-        unique = _.find(values, (el) => {
-            if(el.length === minLen) { 
-                return el;
-            }
-            idx += 1;
-        });
-        if(unique.length) {
-            console.log('multiple drugs have these side effects')
-        }
-    }
-
-    unique = unique[_.random(unique.length-1)];
-
-    const remainingDrugs = Object.values(category).reduce((prev, drug) => {
-        const name = drug['DRUG NAME'];
-        if(name !== unique['DRUG NAME'] && !(name in prev)) {
-            prev.push(name);
-        }
-        return prev;
-    }, [])
-
+    const answerList = unique.restInCategory.map(r => r['DRUG NAME']);
+    const answer = `Do Use: ${answerList ? answerList.join(',') : ''}\nDo NOT USE: ${unique.uniqueAdrDrug['DRUG NAME']}`;
     let question = new Question(
-        `Patient wants to go on a drug in the ${unique.CATEGORY} category but is worried about adverse drug effects such as: ${unique.ADRS}. Which drug from this category would you perscribe to avoid these?`,
-        `${remainingDrugs}`,
-        category,
+        `Patient wants to go on a drug in the ${unique.uniqueAdrDrug.CATEGORY} category but is worried about adverse drug effects such as: ${Object.keys(adrCategory)[uniqueIdx]}. Which drug from this category would you perscribe to avoid these?`,
+        answer,
+        adrCategory,
         {},
         'ADRs'
     )
@@ -138,4 +97,78 @@ export const adrQuestion = drugList => {
     //      `Patient wants to go on ${category} to ${MOA} but is worried about ${SIDE EFFECT}.
     //       Which ${drug || subcategory} would you perscribe.
     //
+}
+
+
+const uniqueAdrIndexByCategory = (drugList) => {
+    // get all ADRs
+    const drugListByDrug = (drugList) => (
+        Object.values(drugList).reduce((prev, category) => {
+            return prev.concat(...Object.values(category));
+        }, [])
+    )
+
+
+    const splitAdrs = (str) => {
+        if (!str) { return []; }
+        const splitAdrs = str.replace(/\n/g, "").split(',');
+        return Array.isArray(splitAdrs) ? splitAdrs : [splitAdrs];
+    }
+
+    // Returns list of all ADRs 
+    const drugsByAdr = (drugList) => {
+        return drugListByDrug(drugList).reduce((prev, drug) => {
+            splitAdrs(drug.ADRS).forEach(adr => {
+                if (!prev[adr]) {            // Haven't seen the adr yet.
+                    prev[adr] = [drug];     // Keep an array of drugs for the given adr
+                } else if (prev[adr].indexOf(drug) < 0) {
+                    prev[adr].push(drug);
+                }
+            })
+            return prev;
+        }, {});
+    }
+
+    const adrs = drugsByAdr(drugList);
+
+    const exists = obj => !_.isNull(obj) && !_.isUndefined(obj);
+    // This needs to be a reduce because we need to preserve the actual name of the ADR.
+    const singleDrugAdrs = Object.keys(adrs).reduce((memo, val) => {
+        if (adrs[val] && adrs[val].length == 1) {
+            memo[val] = adrs[val];
+        }
+        return memo;
+    }, {});
+
+
+    // BUILD INDEX
+    const adrIdx = Object.keys(singleDrugAdrs).reduce((memo, key) => {
+        const adr = singleDrugAdrs[key][0];
+        const category = drugList[adr.CATEGORY] || {};
+        const restInCategory = Object.values(category).filter(drug => {
+            return drug['DRUG NAME'] != adr['DRUG NAME'] && exists(drug.ADRS);
+        });
+
+        if (restInCategory.length) {
+            if (memo[adr.CATEGORY]) {
+                memo[adr.CATEGORY][key] = {
+                    uniqueAdrDrug: adr,
+                    restInCategory
+                };
+            }
+            else {
+                memo[adr.CATEGORY] = {
+                    [key]: {
+                        uniqueAdrDrug: adr,
+                        restInCategory
+                    }
+                }
+
+            }
+        }
+        return memo;
+    }, {})
+
+    return adrIdx;
+
 }
