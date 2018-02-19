@@ -6,6 +6,7 @@ import {
     RESET_QUESTION_DISPLAY,
 } from '../actions';
 import {
+    INVALIDATE_CONFIG,
     RECEIVE_CONFIG,
     RECEIVE_DRUG_LIST,
     REQUEST_UPDATE_CONFIG,
@@ -58,11 +59,14 @@ const resolveQuestionType = (id) => (id === "Drug Category" ? "CATEGORY" : "ADRs
 const rootReducer = (state = initialState, action) => {
     switch (action.type) {
         case RECEIVE_DRUG_LIST:
-            return { ...state, ...{ drugList: action.drugList, activeDrugList: filterActiveDrugs(state.drugList, action.config)} }
+            return { ...state, ...{ drugList: action.drugList} }
 
         case RECEIVE_CONFIG:
         case REQUEST_UPDATE_CONFIG:
             return { ...state, ...{ toggle: action.config, activeDrugList: filterActiveDrugs(state.drugList, action.config) } }
+
+        case INVALIDATE_CONFIG:
+            return { ...state, ...{ activeDrugList: filterActiveDrugs(state.drugList, state.toggle) } };
 
         case SHOW_ANSWER:
             return { ...state, ...{ prompt: setShowAnswer(state.prompt) } };

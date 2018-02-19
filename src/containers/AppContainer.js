@@ -1,5 +1,6 @@
 import { connect } from 'react-redux';
 import App from '../components/App'
+import { invalidateConfig } from "../actions/asyncActions";
 import { 
     resetQuestionDisplay,
     mainMenuClick,
@@ -12,6 +13,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = dispatch => ({
     onItemClick: (id) => {
+        dispatch(invalidateConfig());
         dispatch(mainMenuClick(id))
         dispatch(resetQuestionDisplay())
     }
