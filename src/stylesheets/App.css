@@ -52,7 +52,7 @@
     grid-area: sub-footer;
 }
 
-@media (min-width: 700px) {
+@media (min-width: 500px) {
     .wrapper {
         grid-template-columns: 1fr 4fr;
         grid-template-areas: 

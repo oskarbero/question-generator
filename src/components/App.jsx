@@ -12,6 +12,7 @@ class App extends Component {
   getRequestedContent = () => {
     switch (this.props.menuItemClicked) {
       case 'ADRs':
+      case 'Uses':
       case 'Drug Category':
         return <QuestionContainer />;
       case 'Settings':

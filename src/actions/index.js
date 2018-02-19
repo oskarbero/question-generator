@@ -23,6 +23,7 @@
 
 export const QUESTION_TYPE = {
     NONE: 'NONE',
+    USES: 'Drug Uses',
     ADR: 'ADRs',
     CATEGORY: 'CATEGORY'
 }

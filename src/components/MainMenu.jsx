@@ -21,6 +21,11 @@ const MainMenu = ({ onItemClick }) => {
             key={2}
             primaryText="ADRs"
             onClick={handler("ADRs")}
+        />,
+        <ListItem
+            key={3}
+            primaryText="Uses"
+            onClick={handler("Uses")}
         />
     ]);
     

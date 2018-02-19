@@ -13,6 +13,7 @@ import {
 } from '../actions/asyncActions';
 import {
     adrQuestion,
+    usesQuestion,
     categoryQuestion,
 } from '../questionGenerator';
 
@@ -35,6 +36,8 @@ const setShowAnswer = (state) => {
 
 const generateQuestion = (state) => {
     switch (state.questionType) {
+        case QUESTION_TYPE.USES: 
+            return usesQuestion(state.activeDrugList);
         case QUESTION_TYPE.CATEGORY:
             return categoryQuestion(state.activeDrugList);
         case QUESTION_TYPE.ADR:
@@ -54,7 +57,17 @@ const filterActiveDrugs = (drugList, toggle) => {
     }, {})
 }
 
-const resolveQuestionType = (id) => (id === "Drug Category" ? "CATEGORY" : "ADRs");
+const resolveQuestionType = (id) => {
+    switch(id) {
+        case "Uses":
+            return QUESTION_TYPE.USES;
+        case "ADRs":
+            return "ADRs";
+        case "Drug Category": 
+        default:
+            return "CATEGORY";
+    }
+};
 
 const rootReducer = (state = initialState, action) => {
     switch (action.type) {

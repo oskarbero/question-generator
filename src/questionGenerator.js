@@ -28,6 +28,33 @@ const getRandomDrug = category => {
     return category[idx] || {}
 };
 
+export const usesQuestion = (drugList) => {
+    if(!drugList) {
+        return;
+    }
+    const categoryData = getRandomCategory(drugList);
+    if(!categoryData) {
+        return;
+    }
+    const drug = getRandomDrug(categoryData);
+    const drugName = drug["DRUG NAME"];
+    const uses = drug['SPECIFIC USES'] || drug['SPECIFIC USES/FACTS'] || 'Uses is not listed in drug data';
+    const categoryName = drug["CATEGORY"];
+
+    return {
+        displayAnswer: false,
+        displayPrompt: true,
+        displayQuestion: true,
+        question: new Question(
+            `What is the drug: "${drugName}" used for?`,
+            `${uses}`,
+            categoryData,
+            drug,
+            'Drug Uses'
+        )
+    }
+}
+
 // We assume that drugList is already filtered according to settings when passed in.
 export const categoryQuestion = (drugList, lastQuestionInfo) => {
     if(!drugList) {
@@ -88,18 +115,11 @@ export const adrQuestion = drugList => {
         question: question
     };
 
-    // 1. get random category 
-    // 2. go through drugs 
-    //      - look at ADR 
-    //      - find unique ADR entry 
-    //      - will have to split by ',' and strip out '\n'
-    // 3. Question format:
-    //      `Patient wants to go on ${category} to ${MOA} but is worried about ${SIDE EFFECT}.
-    //       Which ${drug || subcategory} would you perscribe.
-    //
 }
 
-
+// Indexes the active drug list by individual split adr. 
+// Then takes lists where only one drug has a particular ADR
+// indexes by category and sends back to question generator
 const uniqueAdrIndexByCategory = (drugList) => {
     // get all ADRs
     const drugListByDrug = (drugList) => (
@@ -107,7 +127,6 @@ const uniqueAdrIndexByCategory = (drugList) => {
             return prev.concat(...Object.values(category));
         }, [])
     )
-
 
     const splitAdrs = (str) => {
         if (!str) { return []; }
@@ -170,5 +189,4 @@ const uniqueAdrIndexByCategory = (drugList) => {
     }, {})
 
     return adrIdx;
-
 }
